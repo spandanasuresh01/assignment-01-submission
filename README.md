@@ -29,3 +29,23 @@ pnpm build     # production build
 - Don't use react-query mutation for react-hook-form submit handler.
 - For HMR (hot refresh), the file must export only react component, and not any other constant or object.
 - While most input elements use `...register('name')`, custom elements like select require `<Select<T> name="name" />` instead.
+## AI Usage & Approach
+
+AI tools were used as development assistants during the refactoring process to help understand the existing codebase, identify opportunities for improving component organization, and review implementation approaches.
+
+### Approach
+
+* Inspected the existing Shipping Bill form and its related services, models, and components.
+* Refactored the form submission flow to provide clearer local-save and server-synchronization feedback.
+* Improved the form's submit button behavior by using the existing loading-aware submit component.
+* Updated the Vite configuration and build script to support the Windows development environment.
+* Retained the existing project dependencies and used the available service abstractions.
+
+### Validation
+
+* Installed project dependencies.
+* Ran the production build using `pnpm build`.
+* Verified that the production build completed successfully.
+* Reviewed the Git diff and checked for whitespace errors.
+
+AI-generated suggestions were reviewed and adapted to the existing codebase. The final implementation should be reviewed and tested by the developer to ensure that the behavior meets the assignment requirements.

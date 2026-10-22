@@ -1218,20 +1218,25 @@ function BillEditor({ bill }: { bill?: SavedBill }) {
     try {
       const saved = saveBill(data, draftId)
       setDraftId(saved.id)
-      console.log('Shipping bill save payload', saved.payload)
 
-      // Submit payload to backend API (POST /api/shipping-bills from shipping_bill.http)
+      console.log('Shipping bill save payload:', saved.payload)
+
       try {
         const apiResult = await shippingBillService.upsert(data)
+
         console.log('API response from POST /api/shipping-bills:', apiResult)
-      } catch (apiErr) {
-        console.log('Backend API sync notice (saved locally):', apiErr)
+
+        toast.success(bill ? 'Shipping bill updated' : 'Shipping bill created')
+      } catch (apiError) {
+        console.error('Backend API synchronization failed:', apiError)
+
+        toast.error('Saved locally, but server synchronization failed')
       }
 
-      toast.success(bill ? 'Shipping bill updated' : 'Shipping bill created')
       navigate(routes.toShippingBillEdit(saved.id))
-    } catch (err: any) {
-      console.error('Error saving shipping bill:', err)
+    } catch (error) {
+      console.error('Error saving shipping bill locally:', error)
+
       toast.error('Failed to save shipping bill')
     }
   }
@@ -1717,9 +1722,7 @@ function BillEditor({ bill }: { bill?: SavedBill }) {
                 Save & Next
               </Button>
             ) : (
-              <Button type="submit">
-                Save changes
-              </Button>
+              <SubmitButton>Save changes</SubmitButton>
             )}
           </div>
         </div>
